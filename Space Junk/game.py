@@ -1,6 +1,6 @@
 import pygame
 
-class SpaceRocks:
+class SpaceJunk:
     def __init__(self):
         self._init_pygame()
         self.screen = pygame.display.set_mode((800, 600))
@@ -13,7 +13,7 @@ class SpaceRocks:
 
     def _init_pygame(self):
         pygame.init()
-        pygame.display.set_caption("Space Rocks")
+        pygame.display.set_caption("Space Junk!")
 
     def _handle_input(self):
         pass
