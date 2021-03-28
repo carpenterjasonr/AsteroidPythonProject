@@ -1,7 +1,7 @@
 import pygame
 
 from models import Spaceship, Asteroid
-from utils import get_random_position, load_sprite
+from utils import get_random_position, load_sprite, print_text
 
 class SpaceJunk:
     MIN_ASTEROID_DISTANCE = 250
@@ -11,6 +11,8 @@ class SpaceJunk:
         self.screen = pygame.display.set_mode((800, 600))
         self.background = load_sprite("space", False)
         self.clock = pygame.time.Clock()
+        self.font = pygame.font.Font(None, 64)
+        self.message = ""
 
         self.asteroids = []
         self.bullets = []
@@ -22,7 +24,7 @@ class SpaceJunk:
                 if (position.distance_to(self.spaceship.position) > self.MIN_ASTEROID_DISTANCE):
                     break
 
-            self.asteroids.append(Asteroid(position))
+            self.asteroids.append(Asteroid(position, self.asteroids.append))
 
     def main_loop(self):
         while True:
@@ -63,6 +65,7 @@ class SpaceJunk:
             for asteroid in self.asteroids:
                 if asteroid.collides_with(self.spaceship):
                     self.spaceship = None
+                    self.message = "Ship Destroyed!"
                     break
         
         for bullet in self.bullets[:]:
@@ -70,11 +73,15 @@ class SpaceJunk:
                 if asteroid.collides_with(bullet):
                     self.asteroids.remove(asteroid)
                     self.bullets.remove(bullet)
+                    asteroid.split()
                     break
         
         for bullet in self.bullets[:]:
             if not self.screen.get_rect().collidepoint(bullet.position):
                 self.bullets.remove(bullet)
+        
+        if not self.asteroids and self.spaceship:
+            self.message = "You won!"
 
     def _draw(self):
         self.screen.blit(self.background, (0, 0))
@@ -82,6 +89,8 @@ class SpaceJunk:
             game_object.draw(self.screen)
         pygame.display.flip()
         self.clock.tick(60)
+        if self.message:
+            print_text(self.screen, self.message, self.font)
 
     def _get_game_objects(self):
         game_objects = [*self.asteroids, *self.bullets]
