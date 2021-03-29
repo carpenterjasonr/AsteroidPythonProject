@@ -34,7 +34,7 @@ def get_random_velocity(min_speed, max_speed):
     angle = random.randrange(0, 360)
     return Vector2(speed, 0).rotate(angle)
 
-def print_text(surface, text, font, color=Color("darkseagreen")):
+def print_text(surface, text, font, color = Color("darkseagreen")):
     text_surface = font.render(text, True, color)
     rect = text_surface.get_rect()
     rect.center = Vector2(surface.get_size()) / 2

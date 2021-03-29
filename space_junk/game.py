@@ -97,5 +97,4 @@ class SpaceJunk:
 
         if self.spaceship:
             game_objects.append(self.spaceship)
-        
         return game_objects
