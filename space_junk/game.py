@@ -87,10 +87,10 @@ class SpaceJunk:
         self.screen.blit(self.background, (0, 0))
         for game_object in self._get_game_objects():
             game_object.draw(self.screen)
+            if self.message:
+                print_text(self.screen, self.message, self.font)
         pygame.display.flip()
         self.clock.tick(60)
-        if self.message:
-            print_text(self.screen, self.message, self.font)
 
     def _get_game_objects(self):
         game_objects = [*self.asteroids, *self.bullets]
